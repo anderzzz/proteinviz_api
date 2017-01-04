@@ -1,36 +1,50 @@
-from django.shortcuts import render
-from django.views.generic import ListView
-from django.shortcuts import render
-#from django.forms import ModelFormWithFileField
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from protein_imgs.models import ProteinDataViz
 from protein_imgs.serializers import ProteinDataVizSerializer
 
-class JSONResponse(HttpResponse):
-    '''An HttpResponse that renders its content into JSON.
-
-    '''
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
-
-@csrf_exempt
-def proteindataviz_list(request):
+@api_view(['GET', 'POST'])
+def proteindataviz_list(request, format=None):
     '''List all visualizations
 
     '''
     if request.method == 'GET':
         viz = ProteinDataViz.objects.all()
         serializer = ProteinDataVizSerializer(viz, many=True)
-        return JSONResponse(serializer.data)
+        return Response(serializer.data)
 
-class ProteinDataVizList(ListView):
-    model = ProteinDataViz
+    elif request.method == 'POST':
+        serializer = ProteinDataVizSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def proteindataviz_detail(request, pk, format=None):
+    '''Retrieve, update or delete a visualization
+
+    '''
+    try:
+        viz = ProteinDataViz.objects.get(pk=pk)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ProteinDataVizSerializer(viz)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ProteinDataVizSerializer(viz, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        viz.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 #def upload_file(request):
 #    if request.method == 'POST':

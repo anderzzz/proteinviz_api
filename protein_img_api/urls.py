@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework.urlpatterns import format_suffix_patterns
 from protein_imgs import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^proteindataviz/$', views.proteindataviz_list),
+    url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.proteindataviz_detail),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
