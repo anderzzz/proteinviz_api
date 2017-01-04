@@ -20,8 +20,8 @@ class ProteinDataViz(models.Model):
                                   choices=WHO_ENTERED)
     created_by_version = models.CharField(max_length=200, blank=False)
     created_by_version.validators = [validators.int_list_validator(sep='.')]
-    viz_category = models.CharField(max_length=200, blank=False)
-    vis_file = models.FileField(upload_to='uploads/%Y/%m/%d')
+    viz_category = models.CharField(max_length=200, blank=False, default='')
+    viz_file_path = models.CharField(max_length=500, blank=False, default='')
 
     class Meta:
         '''Meta class to define attribute to order'''

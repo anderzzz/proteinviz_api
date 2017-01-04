@@ -46,5 +46,5 @@ class ProteinDataVizSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProteinDataViz
         fields = ('id', 'title', 'created', 'created_by', 'created_by_version',
-                  'viz_category')
+                  'viz_category', 'viz_file_path')
 

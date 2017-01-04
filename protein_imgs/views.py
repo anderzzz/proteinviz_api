@@ -54,3 +54,14 @@ class ProteinDataVizDetail(APIView):
         viz.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+#class ProteinDataVizFile(APIView):
+#    '''Upload visualization file
+#
+#    '''
+#    parser_classes = (FileUploadParser,)
+#
+#    def put(self, request, filename, format=None):
+#        '''PUT method'''
+#        file_obj = request.data['file']
+#        pass
+#        return Response(status=status.HTTP_204_NO_CONTENT)
