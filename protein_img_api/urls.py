@@ -20,8 +20,8 @@ from protein_imgs import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^proteindataviz/$', views.proteindataviz_list),
-    url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.proteindataviz_detail),
+    url(r'^proteindataviz/$', views.ProteinDataVizList.as_view()),
+    url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.ProteinDataVizDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
