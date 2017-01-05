@@ -3,6 +3,8 @@ from protein_imgs.serializers import ProteinDataVizSerializer
 from django.http import Http404
 from django.template import loader
 from django.conf import settings
+from django.http import HttpResponse
+from django.views import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -76,3 +78,25 @@ class ProteinViz(APIView):
         template = loader.get_template('protein_imgs_web/statement.html')
         context = {'content' : content}
         return Response(template.render(context, request))
+
+class ViewViz(View):
+    '''Simple view of HTML visualization
+
+    '''
+    def get_object(self, pk):
+        try:
+            return ProteinDataViz.objects.get(pk=pk)
+        except ProteinDataViz.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        '''GET method'''
+        viz = self.get_object(pk)
+        serializer = ProteinDataVizSerializer(viz)
+        file_dir = serializer.data['viz_file_path']
+        with open(settings.BASE_DIR + file_dir) as fin:
+            content = fin.read()
+        template = loader.get_template('protein_imgs_web/statement.html')
+        context = {'content' : content}
+        return HttpResponse(template.render(context, request)) 
+
