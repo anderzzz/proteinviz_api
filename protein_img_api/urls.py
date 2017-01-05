@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^proteindataviz/$', views.ProteinDataVizList.as_view()),
     url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.ProteinDataVizDetail.as_view()),
+    url(r'^datavizfile/(?P<pk>[0-9]+)$', views.ProteinViz.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
