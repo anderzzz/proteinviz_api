@@ -100,6 +100,10 @@ class ViewViz(View):
         context = {'content' : content}
         return HttpResponse(template.render(context, request)) 
 
+from collections import namedtuple
+
+AAA = namedtuple('AAA', ['title', 'created', 'created_by', 'div', 'script'])
+
 class Dummy(View):
     '''Super simple stuff
 
@@ -107,10 +111,19 @@ class Dummy(View):
     def get(self, request, format=None):
         '''GET method'''
         viz = ProteinDataViz.objects.all()
-        template = loader.get_template('protein_imgs_web/statement_granular.html')
-        print (viz[0])
-        print (dir(viz[0]))
-        context = {'posts' : viz}
+        coll = []
+        for x in viz:
+            created = x.created
+            title = x.title
+            created_by = x.created_by
+            with open(x.viz_file_path + '_div') as fin:
+                div = fin.read()
+            with open(x.viz_file_path + '_script') as fin:
+                script = fin.read()
+            aaa = AAA(title, created, created_by, div, script)
+            coll.append(aaa)
+        template = loader.get_template('protein_imgs_web/list_of_viz.html')
+        context = {'posts' : coll}
         return HttpResponse(template.render(context, request)) 
 
 
