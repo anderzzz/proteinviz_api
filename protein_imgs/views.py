@@ -100,3 +100,17 @@ class ViewViz(View):
         context = {'content' : content}
         return HttpResponse(template.render(context, request)) 
 
+class Dummy(View):
+    '''Super simple stuff
+
+    '''
+    def get(self, request, format=None):
+        '''GET method'''
+        viz = ProteinDataViz.objects.all()
+        template = loader.get_template('protein_imgs_web/statement_granular.html')
+        print (viz[0])
+        print (dir(viz[0]))
+        context = {'posts' : viz}
+        return HttpResponse(template.render(context, request)) 
+
+
