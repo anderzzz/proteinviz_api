@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from presenter_webapp.models import PresenterDataViz
+from server.presenter_webapp.models import PresenterDataViz
 
 class PresenterDataVizSerializer(serializers.ModelSerializer):
     '''Serializer to translate between data in database and the format sent

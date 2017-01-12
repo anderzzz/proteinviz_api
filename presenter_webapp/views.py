@@ -1,5 +1,5 @@
-from presenter_webapp.models import PresenterDataViz
-from presenter_webapp.serializers import PresenterDataVizSerializer
+from server.presenter_webapp.models import PresenterDataViz
+from server.presenter_webapp.serializers import PresenterDataVizSerializer
 from django.http import Http404
 from django.template import loader
 from django.conf import settings
