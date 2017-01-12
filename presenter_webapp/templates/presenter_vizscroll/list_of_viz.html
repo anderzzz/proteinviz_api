@@ -30,14 +30,15 @@
 
         {% for post in posts %}
             <div>
-                <h1><a href="">{{ post.title }}</a></h1>
-                <p>published: {{ post.created }} </p>
+                <h1><a href="">Hello There</a></h1>
+                <p>published: {{ post.created_time }} </p>
                 {% autoescape on %}
                 {{ post.div|safe }} 
                 {% endautoescape %}
                 {% autoescape on %}
                 {{ post.script|safe }}
                 {% endautoescape %}
+                <p>type: {{post.entry_data_text}}</p>
             </div>
         {% endfor %}
     </body>

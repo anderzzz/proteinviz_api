@@ -100,30 +100,26 @@ class ViewViz(View):
         context = {'content' : content}
         return HttpResponse(template.render(context, request)) 
 
-from collections import namedtuple
-
-AAA = namedtuple('AAA', ['title', 'created', 'created_by', 'div', 'script'])
-
-class Dummy(View):
+class AllPosts(View):
     '''Super simple stuff
 
     '''
     def get(self, request, format=None):
         '''GET method'''
-        viz = PresenterDataViz.objects.all()
-        coll = []
-        for x in viz:
-            created = x.created
-            title = x.title
-            created_by = x.created_by
-            with open(x.viz_file_path + '_div') as fin:
-                div = fin.read()
-            with open(x.viz_file_path + '_script') as fin:
-                script = fin.read()
-            aaa = AAA(title, created, created_by, div, script)
-            coll.append(aaa)
-        template = loader.get_template('presenter_vizscroll/list_of_viz.html')
-        context = {'posts' : coll}
-        return HttpResponse(template.render(context, request)) 
+        postables = {}
 
+        presenter_model_instances = PresenterDataViz.objects.all()
+        for model in presenter_model_instances:
+            data_file_root = model.file_path + '/' + model.file_namespace
+            with open(data_file_root + '_div') as fin:
+                postables['div'] = fin.read()
+            with open(data_file_root + '_script') as fin:
+                postables['script'] = fin.read()
+
+            postables['created_time'] = model.created_time
+            postables['entry_data_text'] = model.entry_data_text
+
+        template = loader.get_template('presenter_vizscroll/list_of_viz.html')
+        context = {'posts' : postables}
+        return HttpResponse(template.render(context, request)) 
 
