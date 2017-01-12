@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from protein_imgs.models import ProteinDataViz
+from protein_imgs.models import PresenterDataViz
 
 #class ProteinDataVizSerializer(serializers.Serializer):
 #    '''Serializer to translate between data in database and the format sent
@@ -44,7 +44,7 @@ class ProteinDataVizSerializer(serializers.ModelSerializer):
 
     '''
     class Meta:
-        model = ProteinDataViz
+        model = PresenterDataViz
         fields = ('id', 'title', 'created', 'created_by', 'created_by_version',
                   'viz_category', 'viz_file_path')
 

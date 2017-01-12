@@ -1,4 +1,4 @@
-from protein_imgs.models import ProteinDataViz
+from protein_imgs.models import PresenterDataViz
 from protein_imgs.serializers import ProteinDataVizSerializer
 from django.http import Http404
 from django.template import loader
@@ -15,7 +15,7 @@ class ProteinDataVizList(APIView):
     '''
     def get(self, request, format=None):
         '''GET method'''
-        viz = ProteinDataViz.objects.all()
+        viz = PresenterDataViz.objects.all()
         serializer = ProteinDataVizSerializer(viz, many=True)
         return Response(serializer.data)
 
@@ -33,8 +33,8 @@ class ProteinDataVizDetail(APIView):
     '''
     def get_object(self, pk):
         try:
-            return ProteinDataViz.objects.get(pk=pk)
-        except ProteinDataViz.DoesNotExist:
+            return PresenterDataViz.objects.get(pk=pk)
+        except PresenterDataViz.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
@@ -64,8 +64,8 @@ class ProteinViz(APIView):
     '''
     def get_object(self, pk):
         try:
-            return ProteinDataViz.objects.get(pk=pk)
-        except ProteinDataViz.DoesNotExist:
+            return PresenterDataViz.objects.get(pk=pk)
+        except PresenterDataViz.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
@@ -85,8 +85,8 @@ class ViewViz(View):
     '''
     def get_object(self, pk):
         try:
-            return ProteinDataViz.objects.get(pk=pk)
-        except ProteinDataViz.DoesNotExist:
+            return PresenterDataViz.objects.get(pk=pk)
+        except PresenterDataViz.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
@@ -110,7 +110,7 @@ class Dummy(View):
     '''
     def get(self, request, format=None):
         '''GET method'''
-        viz = ProteinDataViz.objects.all()
+        viz = PresenterDataViz.objects.all()
         coll = []
         for x in viz:
             created = x.created
