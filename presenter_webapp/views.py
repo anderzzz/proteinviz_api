@@ -106,18 +106,22 @@ class AllPosts(View):
     '''
     def get(self, request, format=None):
         '''GET method'''
-        postables = {}
+        postables = []
 
         presenter_model_instances = PresenterDataViz.objects.all()
         for model in presenter_model_instances:
-            data_file_root = model.file_path + '/' + model.file_namespace
-            with open(data_file_root + '_div') as fin:
-                postables['div'] = fin.read()
-            with open(data_file_root + '_script') as fin:
-                postables['script'] = fin.read()
+            d_out = {}
 
-            postables['created_time'] = model.created_time
-            postables['entry_data_text'] = model.entry_data_text
+            data_file_root = model.file_path + '/' + model.file_namespace
+            with open(data_file_root + '.html_div') as fin:
+                d_out['div'] = fin.read()
+            with open(data_file_root + '.js') as fin:
+                d_out['script'] = fin.read()
+
+            d_out['created_time'] = str(model.created_time)
+            d_out['entry_data_text'] = model.entry_data_type
+
+            postables.append(d_out)
 
         template = loader.get_template('presenter_vizscroll/list_of_viz.html')
         context = {'posts' : postables}
