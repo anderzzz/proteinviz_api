@@ -12,7 +12,7 @@ class PresenterDataViz(models.Model):
     WHO_ENTERED = (
         ('H1', 'Human One'),
         ('H2', 'Human Second'),
-        ('S1', 'proteinmeta.Presenter'))
+        ('S1', 'Presenter.produce_visualization'))
 
     created_by = models.CharField(max_length=200, blank=True, default='',
                                   choices=WHO_ENTERED)

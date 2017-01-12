@@ -1,4 +1,4 @@
-"""protein_img_api URL Configuration
+"""presenter_api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -16,13 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
-from protein_imgs import views
+from presenter_webapp import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^proteindataviz/$', views.ProteinDataVizList.as_view()),
-    url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.ProteinDataVizDetail.as_view()),
-    url(r'^datavizfile/(?P<pk>[0-9]+)$', views.ProteinViz.as_view()),
+    url(r'^proteindataviz/$', views.PresenterDataVizList.as_view()),
+    url(r'^proteindataviz/(?P<pk>[0-9]+)$', views.PresenterDataVizDetail.as_view()),
+    url(r'^datavizfile/(?P<pk>[0-9]+)$', views.PresenterViz.as_view()),
     url(r'^viewviz/(?P<pk>[0-9]+)$', views.ViewViz.as_view()),
     url(r'^dummy/$', views.Dummy.as_view()),
 ]
