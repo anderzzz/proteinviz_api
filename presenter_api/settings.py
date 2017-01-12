@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'presenter_webapp.apps.PresenterAppConfig'
+    'server.presenter_webapp.apps.PresenterAppConfig'
 ]
 
 MIDDLEWARE = [
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'presenter_api.urls'
+ROOT_URLCONF = 'server.presenter_api.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'presenter_api.wsgi.application'
+WSGI_APPLICATION = 'server.presenter_api.wsgi.application'
 
 
 # Database
