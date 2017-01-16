@@ -31,3 +31,19 @@ class PresenterDataViz(models.Model):
     class Meta:
         '''Meta class to define attribute to order'''
         ordering = ('created_time',)
+
+class RetrieverStructure(models.Model):
+    '''Bla bla
+
+    '''
+    pubmedid = models.CharField(max_length=501, blank=True, default='')
+    pubmedid.validators = [validators.int_list_validator(sep=',')]
+    description = models.CharField(max_length=500, blank=True, default='')
+    resolution_min = models.FloatField(blank=True, null=True)
+    resolution_max = models.FloatField(blank=True, null=True)
+    title = models.CharField(max_length=500, blank=True, default='')
+    depositdate_min = models.CharField(max_length=10, blank=True, default='')
+    depositdate_max = models.CharField(max_length=10, blank=True, default='')
+    molweight_min = models.FloatField(blank=True, null=True)
+    molweight_max = models.FloatField(blank=True, null=True)
+

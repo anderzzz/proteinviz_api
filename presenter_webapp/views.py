@@ -3,11 +3,15 @@ from server.presenter_webapp.serializers import PresenterDataVizSerializer
 from django.http import Http404
 from django.template import loader
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
+from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from .forms import RetrieverForm 
+from server.presenter_webapp.models import RetrieverStructure 
 
 class PresenterDataVizList(APIView):
     '''List all protein data visualization, or create new one
@@ -26,6 +30,9 @@ class PresenterDataVizList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#class RetrieverStructureView(APIView):
+
 
 class PresenterDataVizDetail(APIView):
     '''Retrieve, update or delete visualization instance
@@ -127,3 +134,18 @@ class AllPosts(View):
         context = {'posts' : postables}
         return HttpResponse(template.render(context, request)) 
 
+def post_simple(request):
+    if request.method == 'GET':
+        form = RetrieverForm()
+    else:
+        form = RetrieverForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            resolution = form.cleaned_data['resolution_min']
+            retriever_cmd = RetrieverStructure.objects.create(title=title,
+                                                 resolution_min=resolution,
+                                                 resolution_max=resolution)
+            retriever_cmd.save()
+            return HttpResponseRedirect('/retriever')
+
+    return render(request, 'retriever/simple.html', {'form': form})

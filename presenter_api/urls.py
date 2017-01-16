@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^datavizfile/(?P<pk>[0-9]+)$', views.PresenterViz.as_view()),
     url(r'^viewviz/(?P<pk>[0-9]+)$', views.ViewViz.as_view()),
     url(r'^allposts/$', views.AllPosts.as_view()),
+    url(r'^retriever/$', views.post_simple),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
