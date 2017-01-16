@@ -1,5 +1,6 @@
 from server.presenter_webapp.models import PresenterDataViz
 from server.presenter_webapp.serializers import PresenterDataVizSerializer
+from server.presenter_webapp.serializers import RetrieverStructureSerializer
 from django.http import Http404
 from django.template import loader
 from django.conf import settings
@@ -146,6 +147,12 @@ def post_simple(request):
                                                  resolution_min=resolution,
                                                  resolution_max=resolution)
             retriever_cmd.save()
+            serializer = RetrieverStructureSerializer(retriever_cmd)
+            print (serializer.data)
+            # My thinking is to serialize model, send to a "statement creator"
+            # which parses the JSON and launches a calculation, returns the new
+            # visualization entry ID for loading.
+            xx=proteinmeta.launcher(serializer.data)
             return HttpResponseRedirect('/retriever')
 
     return render(request, 'retriever/simple.html', {'form': form})
