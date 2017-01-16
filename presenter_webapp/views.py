@@ -10,9 +10,13 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.renderers import JSONRenderer
 
 from .forms import RetrieverForm 
 from server.presenter_webapp.models import RetrieverStructure 
+import sys
+sys.path.append('/home/anderzzz/ideas/protein')
+from statement_creator import Launcher
 
 class PresenterDataVizList(APIView):
     '''List all protein data visualization, or create new one
@@ -149,6 +153,9 @@ def post_simple(request):
             retriever_cmd.save()
             serializer = RetrieverStructureSerializer(retriever_cmd)
             print (serializer.data)
+            json_data = JSONRenderer().render(serializer.data).decode("utf-8")
+            print (json_data)
+            statement_creator = Launcher(json_data)
             # My thinking is to serialize model, send to a "statement creator"
             # which parses the JSON and launches a calculation, returns the new
             # visualization entry ID for loading.
